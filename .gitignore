@@ -6,6 +6,8 @@ __pycache__
 db.sqlite3
 media
 
+
+
 # Backup files #
 *.bak
 
@@ -74,6 +76,7 @@ ENV/
 env.bak/
 venv.bak/
 .env
+theenv/
 
 # mkdocs documentation
 /site
@@ -97,4 +100,3 @@ Control.ca-list
 Control.ca-bundle
 Control.system-ca-bundle
 GitHub.sublime-settings
-
