@@ -23,4 +23,5 @@ class PlantPictureAdmin(admin.ModelAdmin):
     search_fields = ("plant",)
 
 
-admin.site.register(CommonName, Description)
+admin.site.register(CommonName)
+admin.site.register(Description)

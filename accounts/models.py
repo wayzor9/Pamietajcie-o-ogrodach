@@ -1,8 +1,7 @@
-from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
-from plants.models import Plant
+from plants.models import Plant, ProfilePlant
 from .managers import UserManager
 
 
@@ -22,8 +21,6 @@ class User(AbstractUser):
 
 class UserProfile:
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    plant = models.ForeignKey(
-        Plant, on_delete=models.CASCADE, related_name="users_plants"
-    )
+    plant = models.ManyToManyField(Plant, through=ProfilePlant)
     # weather = models.ForeignKey(User, on_delete=models.CASCADE)
     # location
