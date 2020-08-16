@@ -11,7 +11,7 @@ class Plant(models.Model):
 
 
 class ProfilePlant(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey("UserProfile", on_delete=models.CASCADE)
     plant = models.ForeignKey(Plant, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
     update = models.DateTimeField(auto_now=True, null=True, blank=True)
@@ -68,3 +68,10 @@ class Description(models.Model):
     soil_salinity = models.IntegerField(blank=True, null=True)  # 0 > 10
     soil_texture = models.IntegerField(blank=True, null=True)  # 0 > 10
     soil_humidity = models.IntegerField(blank=True, null=True)  # 0 > 10
+
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    plant = models.ManyToManyField(Plant, through=ProfilePlant)
+    # weather = models.ForeignKey(User, on_delete=models.CASCADE)
+    # location
