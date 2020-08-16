@@ -1,6 +1,8 @@
 from django.db import models
 from django.conf import settings
 
+from .utils import upload_image_path
+
 User = settings.AUTH_USER_MODEL
 
 
@@ -24,7 +26,7 @@ class CommonName(models.Model):
 
 
 class PlantPicture(models.Model):
-    image = models.ImageField()
+    image = models.ImageField(upload_to=upload_image_path)
     plant = models.ForeignKey(Plant, on_delete=models.CASCADE)
     profile_plant = models.ForeignKey(ProfilePlant, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
