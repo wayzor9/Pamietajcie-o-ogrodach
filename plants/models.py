@@ -9,6 +9,9 @@ class Plant(models.Model):
     name = models.CharField(max_length=200)
     created = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return f"{self.name}, plantId: {self.plantId_id}"
+
 
 class ProfilePlant(models.Model):
     user = models.ForeignKey("UserProfile", on_delete=models.CASCADE)
@@ -17,10 +20,27 @@ class ProfilePlant(models.Model):
     update = models.DateTimeField(auto_now=True, null=True, blank=True)
     # location
 
+    def __str__(self):
+        return f"Profile plant: {self.user}, {self.plant}"
+
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    plant = models.ManyToManyField(Plant, through=ProfilePlant)
+
+    # weather = models.ForeignKey(User, on_delete=models.CASCADE)
+    # location
+
+    def __str__(self):
+        return f"Profile owner: {self.user}"
+
 
 class CommonName(models.Model):
     name = models.CharField(max_length=200)
     plant = models.ForeignKey(Plant, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
 
 
 class PlantPicture(models.Model):
@@ -69,9 +89,5 @@ class Description(models.Model):
     soil_texture = models.IntegerField(blank=True, null=True)  # 0 > 10
     soil_humidity = models.IntegerField(blank=True, null=True)  # 0 > 10
 
-
-class UserProfile(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    plant = models.ManyToManyField(Plant, through=ProfilePlant)
-    # weather = models.ForeignKey(User, on_delete=models.CASCADE)
-    # location
+    def __str__(self):
+        return f"{self.plant.name}"
