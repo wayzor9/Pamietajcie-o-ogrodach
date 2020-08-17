@@ -1,14 +1,13 @@
 from django.contrib import admin
 
-from .models import Plant, ProfilePlant, CommonName, PlantPicture, Description
+from .models import Plant, ProfilePlant, CommonName, Picture, Description, Service
 
 # Register your models here.
 
 
 @admin.register(Plant)
 class PlantAdmin(admin.ModelAdmin):
-    list_display = ("name", "plantId_id")
-    search_fields = ("name",)
+    list_display = ("name",)
 
 
 @admin.register(ProfilePlant)
@@ -17,9 +16,15 @@ class ProfilePlantAdmin(admin.ModelAdmin):
     ordering = ("plant",)
 
 
-@admin.register(PlantPicture)
-class PlantPictureAdmin(admin.ModelAdmin):
+@admin.register(Picture)
+class PictureAdmin(admin.ModelAdmin):
     list_display = ("plant", "profile_plant")
+    search_fields = ("plant",)
+
+
+@admin.register(Service)
+class ServiceAdmin(admin.ModelAdmin):
+    list_display = ("name", "internal_id", "external_id")
     search_fields = ("plant",)
 
 
