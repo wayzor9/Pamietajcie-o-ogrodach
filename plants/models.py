@@ -1,6 +1,9 @@
 from django.db import models
 from django.conf import settings
+
+from dynamic_filenames import FilePattern
 from model_utils.models import TimeStampedModel
+from stdimage import StdImageField
 
 
 class Plant(TimeStampedModel):
@@ -35,8 +38,16 @@ class CommonName(TimeStampedModel):
         return self.name
 
 
+upload_to_pattern = FilePattern(
+    filename_pattern="{app_label:.25}/{model_name:.30}/{uuid:base32}{ext}"
+)
+
+
 class Picture(TimeStampedModel):
-    image = models.ImageField()
+    image = StdImageField(
+        upload_to=upload_to_pattern,
+        variations={"thumbnail": {"width": 100, "height": 75}},
+    )
     plant = models.ForeignKey(Plant, on_delete=models.CASCADE)
     profile_plant = models.ForeignKey(ProfilePlant, on_delete=models.CASCADE)
 

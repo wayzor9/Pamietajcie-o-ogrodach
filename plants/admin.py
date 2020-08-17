@@ -1,8 +1,6 @@
 from django.contrib import admin
 
-from .models import Plant, ProfilePlant, CommonName, Picture, Description, Service
-
-# Register your models here.
+from .models import CommonName, Description, Picture, Plant, ProfilePlant, Service
 
 
 @admin.register(Plant)
