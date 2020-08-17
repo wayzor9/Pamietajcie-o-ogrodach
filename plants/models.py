@@ -48,11 +48,11 @@ class Picture(TimeStampedModel):
         upload_to=upload_to_pattern,
         variations={"thumbnail": {"width": 100, "height": 75}},
     )
-    plant = models.ForeignKey(Plant, on_delete=models.CASCADE)
+    plant = models.ForeignKey(Plant, on_delete=models.CASCADE, related_name="pictures")
     profile_plant = models.ForeignKey(ProfilePlant, on_delete=models.CASCADE)
 
 
-class Description(TimeStampedModel):
+class Description(models.Model):
     ANNUAL = "AL"
     BIENNIAL = "BL"
     PERENNIAL = "PL"
