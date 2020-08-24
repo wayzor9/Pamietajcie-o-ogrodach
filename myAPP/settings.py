@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     # Project apps
     "accounts",
     "plants",
+    "plantID",
 ]
 
 MIDDLEWARE = [
@@ -134,3 +135,6 @@ EMAIL_PORT = env("EMAIL_PORT")
 EMAIL_HOST_USER = env("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
 EMAIL_USE_TLS = env("EMAIL_USE_TLS")
+
+
+PLANTID_API_KEY = env("PLANTID_API_KEY")
