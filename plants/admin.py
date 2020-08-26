@@ -3,21 +3,20 @@ from django.contrib import admin
 from .models import CommonName, Description, Picture, Plant, ProfilePlant, Service
 
 
+class PictureInline(admin.TabularInline):
+    model = Picture
+
+
 @admin.register(Plant)
 class PlantAdmin(admin.ModelAdmin):
     list_display = ("name",)
+    inlines = [PictureInline, ]
 
 
 @admin.register(ProfilePlant)
 class ProfilePlantAdmin(admin.ModelAdmin):
     list_display = ("plant", "user")
     ordering = ("plant",)
-
-
-@admin.register(Picture)
-class PictureAdmin(admin.ModelAdmin):
-    list_display = ("plant", "profile_plant")
-    search_fields = ("plant",)
 
 
 @admin.register(Service)
