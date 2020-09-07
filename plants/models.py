@@ -49,11 +49,10 @@ class Picture(TimeStampedModel):
         upload_to=upload_to_pattern,
     )
     plant = models.ForeignKey(Plant, on_delete=models.CASCADE, related_name="pictures")
-    profile_plant = models.ForeignKey(ProfilePlant, on_delete=models.CASCADE)
 
 
 class Description(models.Model):
-    #Choices
+    # choices
     DURATION = Choices("Annual", "Biennial", "Perennial")
     TOXICITY = Choices("Zero", "Low", "Medium", "High")
 

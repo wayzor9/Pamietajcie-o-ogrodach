@@ -1,8 +1,26 @@
 from django.conf import settings
+from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
-from .managers import UserManager
+
+class UserManager(BaseUserManager):
+    def create_user(self, email, password=None, **kwargs):
+        kwargs.setdefault("is_active", False)
+        email = self.normalize_email(email)
+        user = self.model(email=email, **kwargs)
+        user.set_password(password)
+        user.save()
+        return user
+
+    def create_superuser(self, email, password, **extrafields):
+        extrafields.setdefault("is_staff", True)
+        extrafields.setdefault("is_superuser", True)
+        extrafields.setdefault("is_active", True)
+        return self.create_user(email, password, **extrafields)
+
+    def create_user_profile(self, user):
+        return UserProfile.objects.get_or_create(user=user)
 
 
 class User(AbstractUser):

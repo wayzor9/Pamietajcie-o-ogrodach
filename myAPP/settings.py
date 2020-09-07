@@ -26,7 +26,7 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt",
     "djoser",
     # Project apps
-    "accounts",
+    "accounts.apps.AccountsConfig",
     "plants",
     "plantID",
 ]
@@ -127,6 +127,9 @@ DJOSER = {
     "PASSWORD_RESET_CONFIRM_URL": "password-reset/{uid}/{token}",
     "ACTIVATION_URL": "activate/{uid}/{token}",
     "SEND_ACTIVATION_EMAIL": True,
+    # "SERIALIZERS": {
+    #     "activation": accounts.serializers.ActivationSerializers
+    # }
 }
 
 EMAIL_BACKEND = env("EMAIL_BACKEND")
