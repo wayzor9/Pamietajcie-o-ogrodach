@@ -1,10 +1,9 @@
 from rest_framework import viewsets
-from rest_framework.response import Response
 
 from .serializers import PictureSerializer
 from .models import Picture
 
 
-class PictureViewSet(viewsets.ViewSet):
+class PictureViewSet(viewsets.ModelViewSet):
     serializer_class = PictureSerializer
     queryset = Picture.objects.all()
