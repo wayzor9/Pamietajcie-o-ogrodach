@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     "accounts.apps.AccountsConfig",
     "plants",
     "plantID",
+    "trefle_api",
 ]
 
 MIDDLEWARE = [
@@ -141,3 +142,4 @@ EMAIL_USE_TLS = env("EMAIL_USE_TLS")
 
 
 PLANTID_API_KEY = env("PLANTID_API_KEY")
+TREFLE_API_KEY = env("TREFLE_API_KEY")
