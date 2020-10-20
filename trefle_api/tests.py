@@ -1,3 +1,7 @@
-from django.test import TestCase
+from trefle_api.schemas import FinalSchema
 
-# Create your tests here.
+
+def test_load(fake_plant_data):
+
+    loaded = FinalSchema().load(fake_plant_data)
+    assert loaded["data"]["main_species"]["growth"]["bloom_months"] == "june"

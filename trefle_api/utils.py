@@ -7,7 +7,8 @@ import pprint
 
 pp = pprint.PrettyPrinter(indent=4)
 
-name = "Fraxinus Pennsylvanica"
+#hard coded for testing
+name = "Vaccinium corymbosum"
 
 
 class ClientTrefleApi:
@@ -38,18 +39,19 @@ class ClientTrefleApi:
         # pp.pprint(r)
         return r
 
-    def get_field_info(self, key=None, field_name=None, field_key=None):
-        """
-        :param key: growth or specifications
-        :param field_name: all plant.description model fields
-        :param field_key: e.g. 'minimum_temperature': {'deg_f': -47, 'deg_c': -43},
-        """
-        response_dict = self.get_detail_info()
-        field_value = response_dict["data"]["main_species"][f"{key}"][f"{field_name}"]
-        return field_value
-
-    def get_sowing_value(self):
-        """
-        get value of specified field
-        """
-        return self.get_field_info(key="growth", field_name="sowing")
+    # def get_field_info(self, key=None, field_name=None, field_key=None):
+    #     """
+    #     :param key: growth or specifications
+    #     :param field_name: all plant.description model fields
+    #     :param field_key: e.g. 'minimum_temperature': {'deg_f': -47, 'deg_c': -43},
+    #     """
+    #     response_dict = self.get_detail_info()
+    #     field_value = response_dict["data"]["main_species"][f"{key}"][f"{field_name}"]
+    #     return field_value
+    #
+    # def get_sowing_value(self):
+    #     """
+    #     get value of specified field
+    #     """
+    #     return self.get_field_info(key="growth", field_name="sowing")
+    #
