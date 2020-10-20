@@ -1,4 +1,4 @@
-# The Gradener [![Generic badge](https://img.shields.io/badge/Build-passing-<green>.svg)](https://shields.io/)
+# The Gradener
 
 
 
