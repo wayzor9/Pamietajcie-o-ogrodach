@@ -32,15 +32,20 @@ class PlantIdClient:
             "api_key": self.api_key,
             "images": [images],
             # "modifiers": ["similar_images"],
-            "plant_details": ["common_names", "url", "name_authority", "taxonomy"],
+            "plant_details": [
+                "common_names",
+                "url",
+                "name_authority",
+                "taxonomy"
+            ],
         }
 
         headers = {"Content-Type": "application/json"}
-        response = requests.post(
-            self.identification_url, json=params, headers=headers
-        ).json()
+        response = requests.post(self.identification_url, json=params, headers=headers).json()
         # signal
-        plantid_backend_response.send(sender=self.__class__)
+        plantid_backend_response.send(
+            sender=self.__class__
+        )
         scientific_names = []
         for name in response["suggestions"]:
             a = name["plant_details"]["scientific_name"]

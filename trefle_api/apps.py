@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class TrefleApiConfig(AppConfig):
-    name = "trefle_api"
+    name = 'trefle_api'

@@ -68,7 +68,6 @@ class FinalSchema(Schema):
 
     data = fields.Nested(DataSchema, allow_none=True)
 
-
 """
 load output:
 {'data': {'main_species': {'duration': None,
@@ -94,3 +93,4 @@ load output:
                                               'maximum_height': {'cm': None},
                                               'toxicity': 'none'}}}}
 """
+
