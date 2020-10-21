@@ -7,7 +7,7 @@ import pprint
 
 pp = pprint.PrettyPrinter(indent=4)
 
-# hard coded for testing
+#hard coded for testing
 name = "Vaccinium corymbosum"
 
 
@@ -28,30 +28,13 @@ class ClientTrefleApi:
         return r
 
     def get_detail_info(self):
-        """
+        '''
         Get detail info link stored in get_resource response and request the data
         link: '/api/v1/plants/fraxinus-pensylvannica'
-        """
+        '''
         resource = self.get_resource()
         detail_link = resource["data"][0]["links"]["plant"]
         detail_info_endpoint = f"https://trefle.io{detail_link}?token={self.api_key}"
         r = requests.get(detail_info_endpoint).json()
         # pp.pprint(r)
         return r
-
-    # def get_field_info(self, key=None, field_name=None, field_key=None):
-    #     """
-    #     :param key: growth or specifications
-    #     :param field_name: all plant.description model fields
-    #     :param field_key: e.g. 'minimum_temperature': {'deg_f': -47, 'deg_c': -43},
-    #     """
-    #     response_dict = self.get_detail_info()
-    #     field_value = response_dict["data"]["main_species"][f"{key}"][f"{field_name}"]
-    #     return field_value
-    #
-    # def get_sowing_value(self):
-    #     """
-    #     get value of specified field
-    #     """
-    #     return self.get_field_info(key="growth", field_name="sowing")
-    #

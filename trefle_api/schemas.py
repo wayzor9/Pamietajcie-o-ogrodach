@@ -7,9 +7,7 @@ class SpecificationsSchema(Schema):
 
     growth_habit = fields.Str()
     growth_rate = fields.Str(allow_none=True)
-    toxicity = fields.Str(
-        validate=validate.OneOf(["low", "medium", "high", "none"]), allow_none=True
-    )
+    toxicity = fields.Str(validate=validate.OneOf(["low", "medium", "high", "none"]), allow_none=True)
     average_height = fields.Dict(keys=fields.Str(), values=fields.Int(allow_none=True))
     maximum_height = fields.Dict(keys=fields.Str(), values=fields.Int(allow_none=True))
 
@@ -23,24 +21,14 @@ class GrowthSchema(Schema):
     ph_minimum = fields.Float(validate=validate.Range(min=0, max=14), allow_none=True)
     ph_maximum = fields.Float(validate=validate.Range(min=0, max=14), allow_none=True)
     light = fields.Int(validate=validate.Range(min=0, max=10), allow_none=True)
-    atmospheric_humidity = fields.Int(
-        validate=validate.Range(min=0, max=10), allow_none=True
-    )
+    atmospheric_humidity = fields.Int(validate=validate.Range(min=0, max=10), allow_none=True)
     growth_months = fields.Str(allow_none=True)
     bloom_months = fields.Str(allow_none=True)
     fruit_months = fields.Str(allow_none=True)
-    minimum_precipitation = fields.Dict(
-        keys=fields.Str(), values=fields.Int(allow_none=True)
-    )
-    maximum_precipitation = fields.Dict(
-        keys=fields.Str(), values=fields.Int(allow_none=True)
-    )
-    minimum_temperature = fields.Dict(
-        keys=fields.Str(), values=fields.Int(allow_none=True)
-    )
-    soil_nutriments = fields.Int(
-        validate=validate.Range(min=0, max=10), allow_none=True
-    )
+    minimum_precipitation = fields.Dict(keys=fields.Str(), values=fields.Int(allow_none=True))
+    maximum_precipitation = fields.Dict(keys=fields.Str(), values=fields.Int(allow_none=True))
+    minimum_temperature = fields.Dict(keys=fields.Str(), values=fields.Int(allow_none=True))
+    soil_nutriments = fields.Int(validate=validate.Range(min=0, max=10), allow_none=True)
     soil_salinity = fields.Int(validate=validate.Range(min=0, max=10), allow_none=True)
     soil_texture = fields.Int(validate=validate.Range(min=0, max=10), allow_none=True)
     soil_humidity = fields.Int(validate=validate.Range(min=0, max=10), allow_none=True)

@@ -79,7 +79,6 @@ env.bak/
 venv.bak/
 .env
 theenv/
-myenv/
 
 # mkdocs documentation
 /site
