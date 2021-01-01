@@ -34,30 +34,3 @@ class ClientTrefleApi:
         r = requests.get(detail_info_endpoint).json()
         # pp.pprint(r)
         return r
-
-
-"""
-    load output:
-{'data': {'main_species': {'duration': None,
-                           'growth': {'atmospheric_humidity': None,
-                                      'bloom_months': None,
-                                      'fruit_months': None,
-                                      'growth_months': None,
-                                      'light': None,
-                                      'maximum_precipitation': {'mm': 1270},
-                                      'minimum_precipitation': {'mm': 812},
-                                      'minimum_temperature': {'deg_c': -35,
-                                                              'deg_f': -31},
-                                      'ph_maximum': 7.5,
-                                      'ph_minimum': 4.7,
-                                      'soil_humidity': None,
-                                      'soil_nutriments': None,
-                                      'soil_salinity': None,
-                                      'soil_texture': None,
-                                      'sowing': None},
-                           'specifications': {'average_height': {'cm': None},
-                                              'growth_habit': 'Shrub',
-                                              'growth_rate': 'Moderate',
-                                              'maximum_height': {'cm': None},
-                                              'toxicity': 'none'}}}}
-"""

@@ -9,24 +9,10 @@ from stdimage import StdImageField
 
 class Plant(TimeStampedModel):
     name = models.CharField(max_length=200)
-    plant = models.ManyToManyField(settings.AUTH_USER_MODEL, through="ProfilePlant")
+    plant = models.ManyToManyField(settings.AUTH_USER_MODEL)
 
     def __str__(self):
         return self.name
-
-
-class ProfilePlant(TimeStampedModel):
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name="user_plant_profiles",
-    )
-    plant = models.ForeignKey(
-        Plant, on_delete=models.CASCADE, related_name="plant_profiles"
-    )
-
-    def __str__(self):
-        return f"Profile plant: {self.user}, {self.plant}"
 
 
 class CommonName(TimeStampedModel):
@@ -48,29 +34,28 @@ class Picture(TimeStampedModel):
     image = StdImageField(
         upload_to=upload_to_pattern,
     )
-    plant = models.ForeignKey(Plant, on_delete=models.CASCADE, related_name="pictures")
+    plant = models.ForeignKey(Plant, on_delete=models.CASCADE, null=True, blank=True ,related_name="pictures")
 
 
 class Description(models.Model):
     # choices
-    DURATION = Choices("Annual", "Biennial", "Perennial")
-    TOXICITY = Choices("Zero", "Low", "Medium", "High")
+    DURATION = Choices("annual", "biennial", "perennial")
+    TOXICITY = Choices(('none', "none"), ('low',"low"), ('medium', "medium"), ('high', "high"))
 
     plant = models.OneToOneField(Plant, on_delete=models.CASCADE)
-    description = models.TextField()
+    description = models.TextField(blank=True)
 
     # specifications
-    duration = models.CharField(max_length=2, choices=DURATION, blank=True)
+    duration = models.CharField(max_length=10, choices=DURATION, blank=True)
     growth_habit = models.CharField(max_length=250, blank=True)
     growth_rate = models.CharField(max_length=250, blank=True)
     average_height = models.CharField(max_length=250, blank=True)
     maximum_height = models.CharField(max_length=250, blank=True)
     toxicity = models.CharField(
-        max_length=6, choices=TOXICITY, blank=True, default=TOXICITY.Zero
+        max_length=6, choices=TOXICITY, blank=True, default=TOXICITY.none
     )
-
     # growth
-    sowing = models.CharField(max_length=250, blank=True, null=True)
+    sowing = models.CharField(max_length=250, blank=True)
     ph_maximum = models.DecimalField(
         max_digits=3, decimal_places=2, blank=True, null=True
     )

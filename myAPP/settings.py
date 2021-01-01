@@ -25,6 +25,8 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework_simplejwt",
     "djoser",
+    'django_extensions',
+
     # Project apps
     "accounts.apps.AccountsConfig",
     "plants",
@@ -111,6 +113,8 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
     )
 }
 
@@ -129,7 +133,7 @@ DJOSER = {
     "ACTIVATION_URL": "activate/{uid}/{token}",
     "SEND_ACTIVATION_EMAIL": True,
     # "SERIALIZERS": {
-    #     "activation": accounts.serializers.ActivationSerializers
+    #     "user": 'accounts.serializers.UserCreateSerializer'
     # }
 }
 

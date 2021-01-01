@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import CommonName, Description, Picture, Plant, ProfilePlant, Service
+from .models import CommonName, Description, Picture, Plant, Service
 
 
 class PictureInline(admin.TabularInline):
@@ -11,12 +11,6 @@ class PictureInline(admin.TabularInline):
 class PlantAdmin(admin.ModelAdmin):
     list_display = ("name",)
     inlines = [PictureInline, ]
-
-
-@admin.register(ProfilePlant)
-class ProfilePlantAdmin(admin.ModelAdmin):
-    list_display = ("plant", "user")
-    ordering = ("plant",)
 
 
 @admin.register(Service)

@@ -1,7 +1,11 @@
+import base64
+
 from rest_framework import serializers
 
+from django.conf import settings
+
 from plantID.utils import PlantIdClient
-from plants.models import Picture, Description
+from plants.models import Picture, Description, Plant, CommonName
 from trefle_api.schemas import FinalSchema
 from trefle_api.utils import ClientTrefleApi
 
@@ -12,21 +16,17 @@ class PictureSerializer(serializers.ModelSerializer):
         fields = ("image",)
 
     def create(self, validated_data):
+        user = validated_data.pop('user')
         plantid_client = PlantIdClient()
         trefle_client = ClientTrefleApi()
-        img = validated_data['image']
-        obj_img = img.file
-        if not isinstance(obj_img, bytes):
-            obj_img = plantid_client.encode_file(obj_img)
-        plant_names = plantid_client.identify_plants(obj_img)
-        plant_name_parsed = trefle_client.parsed_name(plant_names[0])
-        get_trefleapi_endpoint = trefle_client.get_resource(plant_name_parsed)
-        get_plant_data = trefle_client.get_detail_info(plant_name_parsed)
-        deserialized_data = FinalSchema(get_plant_data)
+        schema = FinalSchema()
 
-        description = "tralala tralala"
-        #create Description object
+        searched_plant_name = "Rhododendron"
+        get_plant_data = trefle_client.get_detail_info(searched_plant_name)
+        deserialized_data = schema.load(get_plant_data)
+        description = "TODO"
         duration = deserialized_data['data']['main_species']['duration']
+        
         #growth
         atmospheric_humidity = deserialized_data['data']['main_species']['growth']['atmospheric_humidity']
         bloom_months = deserialized_data['data']['main_species']['growth']['bloom_months']
@@ -43,14 +43,21 @@ class PictureSerializer(serializers.ModelSerializer):
         soil_salinity = deserialized_data['data']['main_species']['growth']['soil_salinity']
         soil_texture = deserialized_data['data']['main_species']['growth']['soil_texture']
         sowing = deserialized_data['data']['main_species']['growth']['sowing']
-        #specifications
+        # #specifications
         average_height = deserialized_data['data']['main_species']['specifications']['average_height']['cm']
         growth_habit = deserialized_data['data']['main_species']['specifications']['growth_habit']
         growth_rate = deserialized_data['data']['main_species']['specifications']['growth_rate']
         maximum_height = deserialized_data['data']['main_species']['specifications']['maximum_height']['cm']
-        toxicity = deserialized_data['data']['main_species'['specifications']['toxicity']
-
-        description_obj = Description.objects.create(
+        toxicity = deserialized_data['data']['main_species']['specifications']['toxicity']
+        #create objects
+        picture_obj = super().create(validated_data)
+        plant_obj = Plant.objects.create(name=searched_plant_name)
+        plant_obj.plant.add(user)
+        picture_obj.plant = plant_obj
+        picture_obj.save()
+        common_name_obj = CommonName(name=searched_plant_name, plant=plant_obj)
+        description_data = dict(
+            plant=plant_obj,
             description=description,
             duration=duration,
             atmospheric_humidity=atmospheric_humidity,
@@ -72,8 +79,13 @@ class PictureSerializer(serializers.ModelSerializer):
             growth_habit=growth_habit,
             growth_rate=growth_rate,
             maximum_height=maximum_height,
-            toxicity=toxicity
-        )
-        Picture.objects.create(image=obj_img, plant=description_obj)
-        latest_obj = Picture.objects.latest('created')
-        return latest_obj
+            toxicity=toxicity)
+
+        description_obj_kwargs = {}
+
+        for k, v in description_data.items():
+            if v is not None:
+                description_obj_kwargs[k] = v
+            
+        description_obj = Description.objects.create(**description_obj_kwargs)
+        return picture_obj

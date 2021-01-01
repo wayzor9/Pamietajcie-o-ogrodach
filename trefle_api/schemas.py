@@ -5,7 +5,7 @@ class SpecificationsSchema(Schema):
     class Meta:
         unknown = EXCLUDE
 
-    growth_habit = fields.Str()
+    growth_habit = fields.Str(allow_none=True)
     growth_rate = fields.Str(allow_none=True)
     toxicity = fields.Str(validate=validate.OneOf(["low", "medium", "high", "none"]), allow_none=True)
     average_height = fields.Dict(keys=fields.Str(), values=fields.Int(allow_none=True))

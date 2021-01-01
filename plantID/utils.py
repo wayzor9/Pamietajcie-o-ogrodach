@@ -1,6 +1,6 @@
 import base64
 import requests
-
+from io import BytesIO
 from django.conf import settings
 
 from .signals import plantid_backend_response
@@ -25,9 +25,12 @@ class PlantIdClient:
             file64 = base64.b64encode(file.read()).decode("ascii")
         return file64
 
-    def identify_plant(self, file_names):
-        images = self.encode_files(file_names)
-
+    def identify_plant(self, file, encode64=False):
+        if encode64:
+            images = file
+        else:
+            images = self.encode_files(file_names)
+            
         params = {
             "api_key": self.api_key,
             "images": [images],
