@@ -7,10 +7,12 @@ from .signals import plantid_backend_response
 
 
 class PlantIdClient:
-    def __init__(self):
-        self.api_key = settings.PLANTID_API_KEY
-        self.identification_url = "https://api.plant.id/v2/identify"
-        self.usage_info_url = "https://api.plant.id/v2/usage_info"
+
+    identification_url = "https://api.plant.id/v2/identify"
+    usage_info_url = "https://api.plant.id/v2/usage_info"
+
+    def __init__(self, api_key=None, identification_url=None, usage_info_url=None):
+        self.api_key = api_key or settings.PLANTID_API_KEY
 
     def check_usage_info(self):
         endpoint = self.usage_info_url
@@ -20,7 +22,8 @@ class PlantIdClient:
         )
         return response.json()
 
-    def encode_files(self, file_name):
+    @staticmethod
+    def encode_files(file_name):
         with open(file_name, "rb") as file:
             file64 = base64.b64encode(file.read()).decode("ascii")
         return file64
@@ -29,7 +32,7 @@ class PlantIdClient:
         if encode64:
             images = file
         else:
-            images = self.encode_files(file_names)
+            images = encode_files(file)
             
         params = {
             "api_key": self.api_key,

@@ -21,3 +21,4 @@ class ServiceAdmin(admin.ModelAdmin):
 
 admin.site.register(CommonName)
 admin.site.register(Description)
+admin.site.register(Picture)

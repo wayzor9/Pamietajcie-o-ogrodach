@@ -21,9 +21,14 @@ class PictureSerializer(serializers.ModelSerializer):
         trefle_client = ClientTrefleApi()
         schema = FinalSchema()
 
-        searched_plant_name = "Rhododendron"
+        io_image = validated_data['image'].file.getvalue()
+        img_64 = base64.b64encode(io_image).decode("ascii")
+        plant_names = plantid_client.identify_plant(img_64, encode64=True)
+        searched_plant_name = plant_names[0]
+        
         get_plant_data = trefle_client.get_detail_info(searched_plant_name)
         deserialized_data = schema.load(get_plant_data)
+        
         description = "TODO"
         duration = deserialized_data['data']['main_species']['duration']
         
@@ -55,7 +60,7 @@ class PictureSerializer(serializers.ModelSerializer):
         plant_obj.plant.add(user)
         picture_obj.plant = plant_obj
         picture_obj.save()
-        common_name_obj = CommonName(name=searched_plant_name, plant=plant_obj)
+        common_name_obj = CommonName.objects.create(name=searched_plant_name, plant=plant_obj)
         description_data = dict(
             plant=plant_obj,
             description=description,
