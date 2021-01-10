@@ -14,11 +14,13 @@ class PlantIdClient:
     def __init__(self, api_key=None, identification_url=None, usage_info_url=None):
         self.api_key = api_key or settings.PLANTID_API_KEY
 
-    def check_usage_info(self):
-        endpoint = self.usage_info_url
+    
+    @staticmethod
+    def check_usage_info():
+        endpoint = PlantIdClient.usage_info_url
         headers = {"Content-Type": "application/json"}
         response = requests.post(
-            endpoint, headers=headers, auth=("client", self.api_key)
+            endpoint, headers=headers, auth=("client", PlantIdClient().api_key)
         )
         return response.json()
 
@@ -32,7 +34,7 @@ class PlantIdClient:
         if encode64:
             images = file
         else:
-            images = encode_files(file)
+            images = PlantIdClient.encode_files(file)
             
         params = {
             "api_key": self.api_key,
