@@ -33,7 +33,7 @@ class ClientTrefleApi:
         '''
         resource = self.get_resource(plant_name)
         detail_link = resource["data"][0]["links"]["plant"]
-        detail_info_endpoint = f"https://trefle.io{resource}?token={self.api_key}"
+        detail_info_endpoint = f"https://trefle.io{detail_link}?token={self.api_key}"
         r = requests.get(detail_info_endpoint).json()
         # pp.pprint(r)
         return r
